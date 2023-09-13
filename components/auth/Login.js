@@ -1,8 +1,8 @@
 import { Text, View, Button, TextInput } from "react-native";
 import React, { Component } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-export class Register extends Component {
+export class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +15,7 @@ export class Register extends Component {
   onSignUp() {
     const auth = getAuth();
     const {email, password, name} = this.state
-    createUserWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
         console.log(result);
       })
@@ -27,10 +27,6 @@ export class Register extends Component {
     return (
       <View>
         <TextInput
-          placeholder="name"
-          onChangeText={(name) => this.setState({ name })}
-        />
-        <TextInput
           placeholder="email"
           onChangeText={(email) => this.setState({ email })}
         />
@@ -39,10 +35,10 @@ export class Register extends Component {
           secureTextEntry={true}
           onChangeText={(password) => this.setState({ password })}
         />
-        <Button onPress={() => this.onSignUp()} title="Sign Up" />
+        <Button onPress={() => this.onSignUp()} title="Log in" />
       </View>
     );
   }
 }
 
-export default Register;
+export default Login;
