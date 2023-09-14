@@ -1,6 +1,8 @@
 import { Text, View, Button, TextInput } from "react-native";
 import React, { Component } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { collection, doc, setDoc } from "firebase/firestore"; 
+import { db,auth } from "../../App";
 
 export class Register extends Component {
   constructor(props) {
@@ -17,6 +19,7 @@ export class Register extends Component {
     const {email, password, name} = this.state
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
+       setDoc(doc(db, "users", auth.currentUser.uid), { name: name, email: email})
         console.log(result);
       })
       .catch((error) => {
