@@ -9,8 +9,6 @@ import { View } from "react-native-web";
 import { Text } from "react-native";
 
 import AddScreen from "./components/main/Add";
-import FeedScreen from "./components/main/Feed";
-import ProfileScreen from "./components/main/Profile";
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
