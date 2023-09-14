@@ -3,16 +3,20 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Landing from "./components/auth/Landing";
 import Register from "./components/auth/Register";
-import Main from "./components/Main";
+import MainScreen from "./components/Main";
 import Login from "./components/auth/Login";
 import { View } from "react-native-web";
 import { Text } from "react-native";
 
-import { createStore } from 'redux'
+import AddScreen from "./components/main/Add";
+import FeedScreen from "./components/main/Feed";
+import ProfileScreen from "./components/main/Profile";
+
+import { createStore } from "redux";
 import { Provider } from "react-redux";
-import thunk from 'redux-thunk'; // Replace with your chosen middleware
-import rootReducer from './redux/reducers'; // Import your root reducer
-const store = createStore(rootReducer, applyMiddleware(thunk))
+import thunk from "redux-thunk"; // Replace with your chosen middleware
+import rootReducer from "./redux/reducers"; // Import your root reducer
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -28,9 +32,9 @@ const firebaseConfig = {
   measurementId: "G-RT4ZV1CTPZ",
 };
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app)
+const auth = getAuth(app);
 const db = getFirestore(app);
-export {app, db, auth}
+export { app, db, auth };
 
 const Stack = createStackNavigator();
 export class App extends Component {
@@ -86,7 +90,16 @@ export class App extends Component {
     if (loggedIn) {
       return (
         <Provider store={store}>
-        <Main></Main>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="Main">
+              <Stack.Screen
+                name="Main"
+                component={MainScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="Add" component={AddScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
         </Provider>
       );
     }
